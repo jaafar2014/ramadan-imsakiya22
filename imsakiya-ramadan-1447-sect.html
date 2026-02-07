@@ -4,218 +4,382 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>إمساكية رمضان الذكية</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+
 <style>
 body{
-margin:0;
-font-family:'Cairo',sans-serif;
-background:linear-gradient(180deg,#2b1d4f,#140b2e);
-color:#fff;
-}
-.container{max-width:430px;margin:auto;padding:20px;}
-.card{
-background:rgba(255,255,255,.06);
-border-radius:22px;
-padding:20px;
-box-shadow:0 10px 30px rgba(0,0,0,.45);
-}
-.header{text-align:center}
-.header h1{margin:0;color:#f5d88c;font-size:21px}
-.header p{margin:6px 0;font-size:13px;opacity:.85}
-
-.photo{
-margin:15px auto;
-width:140px;
-height:140px;
-border-radius:50%;
-border:4px solid #f5d88c;
-overflow:hidden;
-}
-.photo img{
-width:100%;
-height:100%;
-object-fit:cover;
+  margin:0;
+  font-family:'Cairo',sans-serif;
+  background:#0b0b0b;
+  color:#fff;
+  overflow-x:hidden;
 }
 
-.memorial{text-align:center;margin:15px 0}
-.memorial strong{
-display:block;
-font-size:20px;
-margin-top:6px;
-color:#ffb703;
+/* القائمة الجانبية */
+.menu-btn{
+  position:fixed;
+  top:15px;
+  right:15px;
+  font-size:26px;
+  cursor:pointer;
+  z-index:1100;
 }
 
-select{
-width:100%;
-padding:12px;
-border-radius:12px;
-border:none;
-margin-bottom:10px;
-font-size:15px;
+.sidebar{
+  position:fixed;
+  top:0;
+  right:-100%;
+  width:260px;
+  height:100%;
+  background:#111;
+  padding:20px;
+  transition:0.4s;
+  z-index:1200;
+}
+.sidebar.active{ right:0; }
+
+.sidebar h3{
+  color:#f0b36d;
+  margin-bottom:15px;
+}
+
+.sidebar select{
+  width:100%;
+  margin-bottom:15px;
+  padding:10px;
+  border-radius:8px;
+  border:none;
+  font-family:'Cairo';
+}
+
+.close-btn{
+  font-size:20px;
+  cursor:pointer;
+  text-align:left;
+  margin-bottom:10px;
+}
+
+/* المحتوى */
+.container{
+  max-width:430px;
+  margin:auto;
+  padding:20px;
+}
+
+.profile{
+  text-align:center;
+  margin-top:20px;
+}
+
+.title-top{
+  font-size:15px;
+  color:#f0b36d;
+  margin-bottom:10px;
+}
+
+.avatar{
+  width:160px;
+  height:160px;
+  margin:auto;
+  border-radius:50%;
+  border:6px solid #f0b36d;
+  overflow:hidden;
+}
+
+.avatar img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.memorial{
+  margin-top:12px;
+  font-size:15px;
+  color:#ddd;
+}
+
+.name{
+  margin-top:6px;
+  font-size:22px;
+  color:#f0b36d;
+  font-weight:700;
+}
+
+.dua{
+  margin-top:10px;
+  font-size:14px;
+  line-height:1.8;
+  color:#ddd;
+}
+
+/* بطاقة اليوم */
+.today{
+  margin:20px 0;
+  padding:15px;
+  background:#151515;
+  border-radius:14px;
+  text-align:center;
+  opacity:0;
+  transform:translateY(10px);
+  transition:0.4s;
+}
+.today.show{
+  opacity:1;
+  transform:translateY(0);
 }
 
 .times{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:8px;
-margin-bottom:10px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
 }
+
 .time-box{
-background:rgba(0,0,0,.35);
-border-radius:12px;
-padding:10px;
-text-align:center;
+  background:#151515;
+  padding:12px;
+  border-radius:12px;
+  text-align:center;
 }
-.time-box span{font-size:12px;opacity:.8}
-.time-box strong{display:block;font-size:15px;color:#f5d88c}
+
+.time-box span{
+  display:block;
+  color:#f0b36d;
+  font-weight:700;
+  margin-top:6px;
+}
 
 .countdown{
-background:linear-gradient(135deg,#ff9f6e,#f5d88c);
-color:#000;
-border-radius:14px;
-padding:12px;
-text-align:center;
-font-weight:700;
-margin-bottom:15px;
+  margin-top:20px;
+  background:linear-gradient(135deg,#f0b36d,#f7c58c);
+  color:#000;
+  padding:15px;
+  border-radius:18px;
+  text-align:center;
+  font-weight:700;
 }
 
+/* الروزنامة */
 .calendar{
-display:grid;
-grid-template-columns:repeat(5,1fr);
-gap:8px;
+  margin-top:30px;
 }
-.day{
-background:#5a3fc0;
-border-radius:12px;
-padding:12px 0;
-text-align:center;
-font-size:13px;
-cursor:pointer;
-}
-.day.active{background:#ff9f6e;color:#000;font-weight:700}
 
-.footer{
-text-align:center;
-font-size:12px;
-opacity:.7;
-margin-top:15px
+.calendar h3{
+  text-align:center;
+  color:#f0b36d;
+}
+
+.days{
+  display:grid;
+  grid-template-columns:repeat(6,1fr);
+  gap:8px;
+  margin-top:15px;
+}
+
+.days button{
+  background:#151515;
+  color:#fff;
+  border:none;
+  padding:10px;
+  border-radius:10px;
+  cursor:pointer;
+  font-family:'Cairo';
+}
+
+.days button.active{
+  background:#f0b36d;
+  color:#000;
+  font-weight:700;
 }
 </style>
 </head>
+
 <body>
 
+<div class="menu-btn" onclick="toggleMenu()">☰</div>
+
+<div class="sidebar" id="sidebar">
+  <div class="close-btn" onclick="toggleMenu()">✕</div>
+  <h3>الإعدادات</h3>
+
+  <!-- المحافظة -->
+  <select id="citySelect" onchange="updateRegions()">
+    <option value="basra">البصرة</option>
+    <option value="baghdad">بغداد</option>
+    <option value="najaf">النجف</option>
+    <option value="karbala">كربلاء</option>
+    <option value="dhiqar">ذي قار</option>
+    <option value="maysan">ميسان</option>
+    <option value="wasit">واسط</option>
+    <option value="babel">بابل</option>
+    <option value="diwaniya">الديوانية</option>
+    <option value="muthanna">المثنى</option>
+  </select>
+
+  <!-- المنطقة -->
+  <select id="regionSelect"></select>
+
+  <select>
+    <option>الوقف الشيعي</option>
+    <option>الوقف السني</option>
+  </select>
+</div>
+
 <div class="container">
-<div class="card">
 
-<div class="header">
-<h1>إمساكية رمضان الذكية</h1>
-<p>رمضان 1447 هـ – 2026 م</p>
+<div class="profile">
+  <div class="title-top">إمساكية رمضان الإلكترونية 2026م – 1447هـ</div>
+
+  <div class="avatar">
+    <img src="صورة المتوفي">
+  </div>
+
+  <div class="memorial">الفاتحة على روح الشهيد</div>
+  <div class="name">اسم المتوفي </div>
+
+  <div class="dua">
+    اللهم اغفر له وارحمه واعفُ عنه، وأسكنه فسيح جناتك.
+  </div>
 </div>
 
-<div class="photo">
-<img src="photo.jpg" alt="صورة الشهيد">
-</div>
-
-<div class="memorial">
-<div>الفاتحة على روح الشهيد</div>
-<strong>اسم المتوفي  </strong>
-</div>
-
-<select id="sect">
-<option value="4">التوقيت السني</option>
-<option value="0">التوقيت الشيعي (الجعفري)</option>
-</select>
-
-<select id="city">
-<option value="">اختر المحافظة</option>
-<option value="Baghdad">بغداد</option>
-<option value="Basrah">البصرة</option>
-<option value="Najaf">النجف</option>
-<option value="Karbala">كربلاء</option>
-<option value="Mosul">نينوى</option>
-<option value="Anbar">الأنبار</option>
-<option value="Diyala">ديالى</option>
-<option value="Wasit">واسط</option>
-<option value="Maysan">ميسان</option>
-<option value="Dhi Qar">ذي قار</option>
-<option value="Muthanna">المثنى</option>
-<option value="Qadisiyah">القادسية</option>
-<option value="Babil">بابل</option>
-<option value="Kirkuk">كركوك</option>
-<option value="Salah ad Din">صلاح الدين</option>
-</select>
+<div class="today" id="todayBox"></div>
 
 <div class="times">
-<div class="time-box"><span>الإمساك</span><strong id="imsak">--</strong></div>
-<div class="time-box"><span>الفجر</span><strong id="fajr">--</strong></div>
-<div class="time-box"><span>الشروق</span><strong id="sunrise">--</strong></div>
-<div class="time-box"><span>الظهر</span><strong id="dhuhr">--</strong></div>
-<div class="time-box"><span>العصر</span><strong id="asr">--</strong></div>
-<div class="time-box"><span>المغرب</span><strong id="maghrib">--</strong></div>
-<div class="time-box"><span>العشاء</span><strong id="isha">--</strong></div>
+  <div class="time-box">الإمساك<span id="imsak"></span></div>
+  <div class="time-box">الفجر<span id="fajr"></span></div>
+  <div class="time-box">الشروق<span id="sunrise"></span></div>
+  <div class="time-box">الظهر<span id="dhuhr"></span></div>
+  <div class="time-box">العصر<span id="asr"></span></div>
+  <div class="time-box">المغرب<span id="maghrib"></span></div>
 </div>
 
-<div id="countdown" class="countdown">اختر المحافظة واليوم</div>
+<div class="countdown" id="countdown"></div>
 
-<div class="calendar" id="calendar"></div>
-
-<div class="footer">
-تقبل الله منا ومنكم صالح الأعمال<br>
-صدقة جارية
+<div class="calendar">
+  <h3>أيام شهر رمضان</h3>
+  <div class="days" id="ramadanDays"></div>
 </div>
 
-</div>
 </div>
 
 <script>
-const calendar=document.getElementById('calendar');
-const city=document.getElementById('city');
-const sect=document.getElementById('sect');
-let day=1;
+function toggleMenu(){
+  document.getElementById("sidebar").classList.toggle("active");
+}
+
+/* المحافظات + المناطق */
+const regionsByCity = {
+  basra:["مركز البصرة","الزبير","القرنة","المدينة","الفاو"],
+  baghdad:["الكرخ","الرصافة"],
+  najaf:["مركز النجف","الكوفة"],
+  karbala:["مركز كربلاء","الهندية"],
+  dhiqar:["الناصرية","الشطرة"],
+  maysan:["العمارة","المجر الكبير"],
+  wasit:["الكوت","النعمانية"],
+  babel:["الحلة","المسيب"],
+  diwaniya:["الديوانية","عفك"],
+  muthanna:["السماوة","الرميثة"]
+};
+
+/* إحداثيات المحافظات */
+const cityCoords={
+  basra:{lat:30.5085,lon:47.7804},
+  baghdad:{lat:33.3152,lon:44.3661},
+  najaf:{lat:31.9996,lon:44.3260},
+  karbala:{lat:32.6160,lon:44.0249},
+  dhiqar:{lat:31.0500,lon:46.2667},
+  maysan:{lat:31.8359,lon:47.1511},
+  wasit:{lat:32.5128,lon:45.8182},
+  babel:{lat:32.4721,lon:44.4317},
+  diwaniya:{lat:31.9892,lon:44.9255},
+  muthanna:{lat:31.3093,lon:45.2806}
+};
+
 let maghribTime=null;
 
-function loadTimes(){
- if(!city.value) return;
- const date=new Date(2026,1,17+day);
- const d=date.getDate(),m=date.getMonth()+1,y=date.getFullYear();
- fetch(`https://api.aladhan.com/v1/timingsByCity/${d}-${m}-${y}?city=${city.value}&country=Iraq&method=${sect.value}`)
- .then(r=>r.json())
- .then(res=>{
-   const t=res.data.timings;
-   imsak.innerText=t.Imsak;
-   fajr.innerText=t.Fajr;
-   sunrise.innerText=t.Sunrise;
-   dhuhr.innerText=t.Dhuhr;
-   asr.innerText=t.Asr;
-   maghrib.innerText=t.Maghrib;
-   isha.innerText=t.Isha;
-   const [h,mm]=t.Maghrib.split(':');
-   maghribTime=new Date(y,m-1,d,h,mm);
- });
+/* تحديث المناطق */
+function updateRegions(){
+  const city=citySelect.value;
+  regionSelect.innerHTML="";
+  regionsByCity[city].forEach(r=>{
+    const opt=document.createElement("option");
+    opt.textContent=r;
+    regionSelect.appendChild(opt);
+  });
+  fetchPrayerTimes();
 }
 
-function startCountdown(){
- setInterval(()=>{
-  if(!maghribTime) return;
-  const diff=maghribTime-new Date();
-  if(diff<=0){countdown.innerText='حان وقت الإفطار 🌙';return;}
-  const h=Math.floor(diff/3600000);
-  const m=Math.floor((diff%3600000)/60000);
-  const s=Math.floor((diff%60000)/1000);
-  countdown.innerText=`الوقت المتبقي للإفطار: ${h}:${m}:${s}`;
- },1000);
+/* جلب الأوقات من API */
+async function fetchPrayerTimes(){
+  const city=citySelect.value;
+  const {lat,lon}=cityCoords[city];
+
+  const res=await fetch(`https://api.aladhan.com/v1/timings?latitude=${lat}&longitude=${lon}&method=4`);
+  const data=await res.json();
+  const t=data.data.timings;
+
+  imsak.innerText=t.Imsak;
+  fajr.innerText=t.Fajr;
+  sunrise.innerText=t.Sunrise;
+  dhuhr.innerText=t.Dhuhr;
+  asr.innerText=t.Asr;
+  maghrib.innerText=t.Maghrib;
+
+  const now=new Date();
+  const [h,m]=t.Maghrib.split(":");
+  maghribTime=new Date(now.getFullYear(),now.getMonth(),now.getDate(),h,m,0);
 }
 
-for(let i=1;i<=30;i++){
- const d=document.createElement('div');
- d.className='day'+(i===1?' active':'');
- d.innerHTML='رمضان<br>'+i;
- d.onclick=()=>{document.querySelectorAll('.day').forEach(x=>x.classList.remove('active'));d.classList.add('active');day=i;loadTimes();};
- calendar.appendChild(d);
+/* عداد الإفطار */
+setInterval(()=>{
+  if(!maghribTime)return;
+  const now=new Date();
+  let diff=maghribTime-now;
+  if(diff<=0){
+    countdown.innerText="🌙 رمضان كريم  ";
+    return;
+  }
+  const mins=Math.floor(diff/60000);
+  const secs=Math.floor((diff%60000)/1000);
+  countdown.innerText=`الوقت المتبقي للإفطار: ${mins} دقيقة و ${secs} ثانية`;
+},1000);
+
+/* الروزنامة */
+const ramadanStart=new Date(2026,1,18);
+const daysNames=["الأحد","الإثنين","الثلاثاء","الأربعاء","الخميس","الجمعة","السبت"];
+const duas=Array(30).fill("اللهم تقبّل صيامي وقيامي واجعلني من المقبولين.");
+const daysBox=document.getElementById("ramadanDays");
+const todayBox=document.getElementById("todayBox");
+
+function renderDays(){
+  const today=new Date();
+  const diff=Math.floor((today-ramadanStart)/86400000)+1;
+  for(let i=1;i<=30;i++){
+    const b=document.createElement("button");
+    b.textContent=i;
+    if(i===diff)b.classList.add("active");
+    b.onclick=()=>selectDay(i,b);
+    daysBox.appendChild(b);
+  }
+  selectDay(diff>0&&diff<=30?diff:1);
 }
 
-city.onchange=()=>{loadTimes();startCountdown();}
-sect.onchange=loadTimes;
+function selectDay(day,btn){
+  document.querySelectorAll(".days button").forEach(x=>x.classList.remove("active"));
+  if(btn)btn.classList.add("active");
+  todayBox.classList.remove("show");
+  setTimeout(()=>{
+    const d=new Date(ramadanStart);
+    d.setDate(ramadanStart.getDate()+day-1);
+    todayBox.innerHTML=
+      `اليوم: ${daysNames[d.getDay()]} – ${day} رمضان<br>
+       الموافق: ${d.toLocaleDateString('ar-IQ')}<br><br>
+       دعاء اليوم:<br>${duas[day-1]}`;
+    todayBox.classList.add("show");
+  },200);
+}
+renderDays();
+updateRegions();
 </script>
 
 </body>
