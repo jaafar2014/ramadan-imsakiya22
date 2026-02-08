@@ -5,6 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>إمساكية رمضان الذكية</title>
 
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-H8LG40B74Q"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-H8LG40B74Q');
+</script>
+
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
@@ -202,7 +211,6 @@ body{
   <div class="close-btn" onclick="toggleMenu()">✕</div>
   <h3>الإعدادات</h3>
 
-  <!-- المحافظة -->
   <select id="citySelect" onchange="updateRegions()">
     <option value="basra">البصرة</option>
     <option value="baghdad">بغداد</option>
@@ -216,7 +224,6 @@ body{
     <option value="muthanna">المثنى</option>
   </select>
 
-  <!-- المنطقة -->
   <select id="regionSelect"></select>
 
   <select>
@@ -235,7 +242,7 @@ body{
   </div>
 
   <div class="memorial">الفاتحة على روح الشهيد</div>
-  <div class="name">اسم المتوفي </div>
+  <div class="name">اسم المتوفي</div>
 
   <div class="dua">
     اللهم اغفر له وارحمه واعفُ عنه، وأسكنه فسيح جناتك.
@@ -297,7 +304,6 @@ const cityCoords={
 
 let maghribTime=null;
 
-/* تحديث المناطق */
 function updateRegions(){
   const city=citySelect.value;
   regionSelect.innerHTML="";
@@ -309,11 +315,9 @@ function updateRegions(){
   fetchPrayerTimes();
 }
 
-/* جلب الأوقات من API */
 async function fetchPrayerTimes(){
   const city=citySelect.value;
   const {lat,lon}=cityCoords[city];
-
   const res=await fetch(`https://api.aladhan.com/v1/timings?latitude=${lat}&longitude=${lon}&method=4`);
   const data=await res.json();
   const t=data.data.timings;
@@ -330,13 +334,12 @@ async function fetchPrayerTimes(){
   maghribTime=new Date(now.getFullYear(),now.getMonth(),now.getDate(),h,m,0);
 }
 
-/* عداد الإفطار */
 setInterval(()=>{
   if(!maghribTime)return;
   const now=new Date();
   let diff=maghribTime-now;
   if(diff<=0){
-    countdown.innerText="🌙 رمضان كريم  ";
+    countdown.innerText="🌙 رمضان كريم";
     return;
   }
   const mins=Math.floor(diff/60000);
